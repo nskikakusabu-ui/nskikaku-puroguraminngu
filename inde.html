@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>まな～ぶ V1.5 -N.S企画 お客様システム</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Fira+Code&display=swap');
+        body { font-family: 'Noto Sans JP', sans-serif; background-color: #f3f4f6; }
+        .code-font { font-family: 'Fira Code', monospace; }
+        .highlight { background: linear-gradient(transparent 70%, #fef08a 70%); font-weight: bold; }
+        .warning { color: #ef4444; font-weight: bold; }
+        .mission-box { border: 3px dashed #eab308; background-color: #fffbeb; padding: 20px; border-radius: 12px; margin: 20px 0; }
+        .usage-box { border-left: 4px solid #3b82f6; background-color: #eff6ff; padding: 10px 15px; margin: 15px 0; font-size: 0.9rem; }
+        .editor-bg { background-color: #1e293b; }
+        .result-bg { background-color: #000000; color: #10b981; }
+        .hidden { display: none; }
+        .btn-locked { opacity: 0.5; cursor: not-allowed; background-color: #9ca3af !important; }
+        .error-wave { text-decoration: underline wavy red; }
+    </style>
+</head>
+<body class="h-screen flex flex-col">
+
+    <!--上部お客様紹介部分-->
+    <header class="bg-white border-b px-6 py-3 flex justify-between items-center shrink-0 shadow-sm z-10">
+        <div class="flex items-center gap-4">
+            <IMG SRC="https://static.wixstatic.com/media/8b23c7_07d2786b9f894d079a46468012ac8a0c~mv2.png/v1/fill/w_204,h_204,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/N_S%E4%BC%81%E7%94%BB%20%E3%83%AD%E3%82%B4.png" WIDTH=20% HEIGHT=20%>
+            <div style="
+            background-color:#3b82f6;
+            color:white;
+            font-weight:bold;
+            padding:6px 12px;
+            border-radius:6px;
+            display:inline-block;
+            ">
+            N.S企画お客様システム<br>まな～ぶ
+        </div>
+        </div>
+        <div class="flex items-center gap-6 text-sm">
+            <div class="text-right">
+                <div class="text-gray-400 text-xs" id="header-date"></div>
+                <div class="font-bold text-gray-800">サイト会員 <span id="header-user"></span> 様</div>
+            </div>
+            <button onclick="app.showHome()" class="bg-gray-100 hover:bg-gray-200 text-gray-600 px-3 py-1 rounded">
+                <i class="fas fa-home"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ホーム画面 -->
+    <div id="view-home" class="flex-grow flex flex-col items-center justify-center p-6">
+        <div class="text-center mb-10">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2" id="welcome-msg">様 こんにちは！</h1>
+            <H1 class="font-bold text-gray-800 mb-2" >N.S企画 お客様システム</H1>
+            <H1 class="text-5xl font-bold text-gray-800 mb-2" ><FONT FACE="serif">まな～ぶ</FONT><B></B></H1>
+            <p class="text-gray-800 text-lg">まな～ぶはN.S企画のお客様システムです、<BR>プログラミング学習サービスからお申込みまで!様々なシステムをご利用いただけます。<!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Document</title>
+            </head>
+            <body>
+                
+            </body>
+            </html></p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl w-full">
+            <div onclick="app.showCourseSelect()" class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all cursor-pointer border-b-8 border-blue-500 transform hover:-translate-y-1">
+                <i class="fas fa-code text-5xl text-blue-500 mb-4"></i>
+                <h3 class="text-xl font-bold mb-2">プログラミング学習</h3>
+                <p class="text-gray-600 text-sm">Pythonなど、実際に手を動かして学べる中心サービスです。</p>
+                <p> <BR>※移動が遅い場合があります</p>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-lg opacity-60 border-b-8 border-gray-300">
+                <i class="fas fa-comments text-5xl text-gray-400 mb-4"></i>
+                <h3 class="text-xl font-bold mb-2 text-gray-400">相談サービス</h3>
+                <p class="text-gray-600 text-sm">（現在準備中）ITのお悩みを解決します。</p>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-lg opacity-60 border-b-8 border-gray-300">
+                <i class="fas fa-comments text-5xl text-gray-400 mb-4"></i>
+                <h3 class="text-xl font-bold mb-2 text-gray-400">各種お申込み</h3>
+                <p class="text-gray-600 text-sm">（現在準備中）セミナー,AI相談WEB受付,デジタルSEIサービスのお申し込みをいただけます</p>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-lg opacity-60 border-b-8 border-gray-300">
+                <i class="fas fa-lightbulb text-5xl text-green-500 mb-4"></i>
+                <h3 class="text-xl font-bold mb-2 text-gray-400">AI豆知識</h3>
+                <p class="text-gray-600 text-sm">（現在準備中）デジタルの豆知識を発信しています。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. コース選択画面 -->
+    <div id="view-course-select" class="flex-grow hidden p-10">
+        <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">学習コースを選んでください</h2>
+        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div onclick="app.startCourse('python')" class="bg-white p-6 rounded-xl border-2 border-transparent hover:border-blue-500 cursor-pointer shadow-sm flex items-center gap-6">
+                <div class="bg-blue-100 p-4 rounded-full"><i class="fab fa-python text-4xl text-blue-600"></i></div>
+                <div>
+                    <h4 class="text-xl font-bold">Python基礎コース</h4>
+                    <p class="text-gray-500 text-sm">AIや自動化に強いPythonをゼロから学びます。</p>
+                </div>
+            </div>
+            <div class="bg-gray-50 p-6 rounded-xl border-2 border-dashed border-gray-300 flex items-center gap-6 opacity-50">
+                <div class="bg-gray-200 p-4 rounded-full"><i class="fas fa-calculator text-4xl text-gray-400"></i></div>
+                <div>
+                    <h4 class="text-xl font-bold font-gray-400">Pythonゲーム (準備中)</h4>
+                    <p class="text-gray-500 text-sm">Pythonでゲームを作りましょう！</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!--  学習画面 -->
+    <main id="view-learning" class="flex-grow hidden overflow-hidden bg-white">
+        <div class="flex h-full w-full">
+            <div class="w-1/2 overflow-y-auto p-10 border-r" id="slide-container">
+                <div id="slide-content"></div>
+                <div class="mt-12 flex justify-between items-center border-t pt-6">
+                    <button id="btn-prev" onclick="app.prevSlide()" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-arrow-left mr-2"></i> 前へ
+                    </button>
+                    <div class="text-sm font-bold text-gray-400">
+                        <span id="current-page">1</span> / <span id="total-pages"></span>
+                    </div>
+                    <button id="btn-next" onclick="app.nextSlide()" class="bg-blue-600 text-white px-8 py-3 rounded-full font-bold shadow-lg transition btn-locked" disabled>
+                        次へ進む <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="w-1/2 flex flex-col editor-bg">
+                <div class="bg-slate-700 text-white p-2 text-xs flex justify-between items-center">
+                    <span><i class="fas fa-code text-yellow-400 mr-2"></i>エディタ (Python 搭載)</span>
+                    <span id="mission-status" class="text-red-400 font-bold">● MISSION 未クリア</span>
+                </div>
+                <textarea id="code-editor" class="flex-grow w-full editor-bg text-blue-100 p-6 code-font outline-none resize-none text-lg" spellcheck="false" placeholder="# ここにコードを書いてください"></textarea>
+                <button onclick="app.runCode()" class="bg-orange-600 hover:bg-orange-700 text-white py-4 font-bold transition flex justify-center items-center gap-2">
+                    <i class="fas fa-play"></i> プログラムを実行してMISSIONを判定する。
+                </button>
+                <div class="h-1/3 flex border-t-2 border-slate-900">
+                    <div class="w-1/2 flex flex-col border-r border-slate-800">
+                        <div class="bg-black text-gray-500 text-[10px] px-2 py-1 uppercase font-bold">実行結果</div>
+                        <div id="output-console" class="flex-grow result-bg p-4 code-font text-sm overflow-y-auto whitespace-pre"></div>
+                    </div>
+                    <div class="w-1/2 flex flex-col bg-white">
+                        <div class="bg-gray-100 text-gray-500 text-[10px] px-2 py-1 uppercase font-bold">アドバイス その他</div>
+                        <div id="feedback-area" class="flex-grow p-4 text-sm text-gray-600 overflow-y-auto leading-relaxed"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t px-6 py-2 flex justify-between items-center text-[10px] text-gray-400 shrink-0">
+        <div>🄫N.S企画 -まな～ぶ</div>
+        <div id="footer-links">
+            <a href="https://nskikakusabu.wixsite.com/nskikaku-2" target="_blank" class="hover:underline">公式サイトへ移動する</a>
+        </div>
+    </footer>
+
+    <script>
+        const app = {
+            state: {
+                nickname: localStorage.getItem('mana-bu-user') || '',
+                currentView: 'home',
+                currentIndex: 0,
+                pyodide: null,
+                missionCleared: false
+            },
+
+            // --- スライド---
+            slides: [
+                 {
+                    title: "Pythonの世界へようこそ",
+                    content: `<p>「まな～ぶ」へようこそ。<br>ここでは<span style="color:#5a67d8; font-weight:bold;">Python（パイソン）</span>というプログラミング言語を学びます。</p>
+                     <p>難しく考えなくて大丈夫。ゲーム感覚で進めていきましょう！</p> `,
+                    mission: false
+                },
+                {
+                    title: "Pythonについて",
+                    content: `<p class="mb-4">Python（パイソン）は、今世界で一番人気のプログラミング言語です。</p>
+                              <div class="usage-box"><b>使い道：</b>YouTubeやInstagramなどの有名なサービスもPythonで作られています。</div>`,
+                    mission: false
+                },
+                {
+                    title: "Pythonができること",
+                    content: `<p class="mb-4">AIの開発、データの分析、Webサイトの作成、自動作業など、これ一つで何でもできます。</p>
+                              <div class="usage-box"><b>使い道：</b>「毎日やっている面倒なExcel作業」を自動化するのによく使われます。</div>`,
+                    mission: false
+                },
+                {
+                   title: "基本ルール：半角を使う",
+        content: `
+            <p>プログラミングで一番大切なルール。</p>
+            <p>それは<span class="wavy-error" style="color:#e53e3e; font-weight:bold;">「全角文字」を使わないこと</span>です。</p>
+            <div class="code-block">
+                <div style="
+                background:#0f172a;
+                color:#e5e7eb;
+                border-radius:8px;
+                padding:16px;
+                font-family:Consolas, 'Courier New', monospace;
+                font-size:14px;
+                line-height:1.6;
+                box-shadow:0 10px 30px rgba(0,0,0,0.3);
+                overflow-x:auto;
+                ">
+                <pre style="margin:0;"><code>
+                    ❌ print("あいうえお") <span style="color:#aaa">// 括弧が全角だと動かない</span><br>
+                    ⭕ print("abc")      <span style="color:#aaa">// 半角ならOK！</span>
+                </code></pre>
+                </div>
+                
+            </div>`,
+                    mission: false
+                },
+                {
+                    title: "1. プリント (print)",
+                    content: `<p class="mb-4"><code>print</code>は、画面に文字を表示させるための命令です。</p>
+                              <div class="usage-box"><b>使い道：</b>システムが正常に動いているか確認するためのメッセージを表示するのに使います。</div>
+                              <div class="mission-box font-bold">【MISSION】<br>print("こんにちは") と入力して実行しよう！</div>
+                              <div style="
+                              background:#0f172a;
+                              color:#e5e7eb;
+                              border-radius:8px;
+                              padding:16px;
+                              font-family:Consolas, 'Courier New', monospace;
+                              font-size:14px;
+                              line-height:1.6;
+                              box-shadow:0 10px 30px rgba(0,0,0,0.3);
+                              overflow-x:auto;
+                              ">
+                              <pre style="margin:0;"><code>
+                                例 print("文章")　<<”を忘れずに！>>
+                                </code></pre>
+                                </div> `,
+                    goal: "こんにちは"
+                },
+                {
+                    title: "2. 計算：足し算・引き算",
+                    content: ` <p>コンピュータは計算の天才です。</p>
+                    <p>数字の計算には <code>"</code> は不要です。</p>
+                    <div class="mission-box font-bold">【MISSION】<br>print(100 + 50) と入力して実行しよう！</div>
+                    <div style="
+                              background:#0f172a;
+                              color:#e5e7eb;
+                              border-radius:8px;
+                              padding:16px;
+                              font-family:Consolas, 'Courier New', monospace;
+                              font-size:14px;
+                              line-height:1.6;
+                              box-shadow:0 10px 30px rgba(0,0,0,0.3);
+                              overflow-x:auto;
+                              ">
+                              <pre style="margin:0;"><code>
+                                例 print(計算)　<<”はいりません>>
+                                </code></pre>
+                                </div> `,
+                    
+                    goal: "150"
+                },
+                {
+                    title: "3. 計算：掛け算・割り算",
+                    content: `<p>プログラミングの世界では、掛け算に <code>×</code> を使いません。代わりに <code>*</code> (アスタリスク) を使います。
+                        </p>割り算は<code>/</code>（スラッシュ）を使います。  
+                              <div class="usage-box"><b>使い道：</b>消費税の計算（* 1.1）や、平均点を出す時に使います。</div>
+                              <div class="mission-box font-bold">【MISSION】<br>print(10 * 8) と入力して実行しよう！</div>`,
+                    goal: "80"
+                },
+                {
+                    title: "4. 変数 (Variable)",
+                    content: `<p class="mb-4">変数とは、データを入れる「名前付きの箱」のことです。<code>name = "N.S企画"</code>のように書きます。</p>
+                              <div class="usage-box"><b>使い道：</b>ユーザーの名前や、今のHP（体力）などを保存しておくために使います。</div>
+                              <div class="mission-box font-bold">【MISSION】<br>x = 50<br>print(x) <br>と2行で書いてみよう！</div>`,
+                    goal: "50"
+                },
+                {
+                    title: "5. 答える (input)",
+                    content: `<p class="mb-4"><code>input()</code>を使うと、使っている人に質問して、その答えを受け取れます。</p>
+                              <div class="usage-box"><b>使い道：</b>アンケートフォームや、ログイン画面のパスワード入力に使います。</div>
+                              <div class="mission-box font-bold">【MISSION】<br>a = input()<br>print(a) <br>と入力して実行し、下の入力欄に「OK」と入れてみよう！</div>`,
+                    goal: "OK"
+                },
+                {
+                    title: "6. 条件式 (if) - 基本",
+                    content: `<p class="mb-4"><code>if</code>を使うと、「もし〜だったら」という条件分岐ができます。</p>
+                              <div class="usage-box"><b>使い道：</b>「もし点数が80点以上なら合格、そうでなければ不合格」といった判定に使います。</div>
+                              <div class="mission-box font-bold">【MISSION】<br>score = 100<br>if score == 100:<br>&nbsp;&nbsp;&nbsp;&nbsp;print("満点")</div>`,
+                    goal: "満点"
+                },
+                {
+                    title: "7. 条件式 (if) - その他",
+                    content: `<p class="mb-4">条件に合わなかった時は <code>else:</code> を使います。</p>
+                              <div class="mission-box font-bold">【MISSION】<br>num = 10<br>if num > 20:<br>&nbsp;&nbsp;&nbsp;&nbsp;print("大")<br>else:<br>&nbsp;&nbsp;&nbsp;&nbsp;print("小")</div>`,
+                    goal: "小"
+                },
+                {
+                    title: "8. リスト",
+                    content: `<p class="mb-4">複数のデータを一つにまとめるのが「リスト」です。<code>[1, 2, 3]</code>のように書きます。</p>
+                              <div class="usage-box"><b>使い道：</b>TODOリストや、商品一覧などの「データの集まり」を管理するのに使います。</div>
+                              <div class="mission-box font-bold">【MISSION】<br>data = [10, 20]<br>print(data[0])</div>`,
+                    goal: "10"
+                },
+                {
+                    title: "9. 繰り返し (for)",
+                    content: `<p class="mb-4"><code>for</code>を使うと、同じ作業を何度も自動で繰り返せます。</p>
+                              <div class="usage-box"><b>使い道：</b>100人分のメールを自動で送信する、といった「繰り返し作業」に必須です。</div>
+                              <div class="mission-box font-bold">【MISSION】<br>for i in range(3):<br>&nbsp;&nbsp;&nbsp;&nbsp;print("Hi")</div>`,
+                    goal: "Hi\nHi\nHi"
+                },
+                {
+                    title: "10. 関数 (Function) - 定義",
+                    content: `<p class="mb-4">関数は、複数の命令をひとまとめにした「道具」です。<code>def</code>で作ります。</p>
+                              <div class="usage-box"><b>使い道：</b>「消費税を計算する」という命令を一度作れば、どこでも再利用できて便利です。</div>
+                              <div class="mission-box font-bold">【MISSION】<br>def greet():<br>&nbsp;&nbsp;&nbsp;&nbsp;print("Hello")</div>`,
+                    mission: true, goal_type: "any" 
+                },
+                {
+                    title: "11. 関数 - 実行",
+                    content: `<p class="mb-4">作った関数は、名前を書くだけで実行できます。</p>
+                              <div class="mission-box font-bold">【MISSION】<br>def say():<br>&nbsp;&nbsp;&nbsp;&nbsp;print("Yes")<br>say()</div>`,
+                    goal: "Yes"
+                },
+                {
+                    title: "12. モジュールの導入",
+                    content: `<p class="mb-4"><code>import</code>を使うと、他人が作った便利な機能を使えます。</p>
+                              <div class="usage-box"><b>使い道：</b>日付を計算したり、ランダムな数字（おみくじ）を作ったりできます。</div>
+                              <div class="mission-box font-bold">【MISSION】<br>import math<br>print(math.pi)</div>`,
+                    mission: true, goal_type: "any"
+                },
+                {
+                    title: "13. 総合演習①",
+                    content: `<p class="mb-4">これまでの知識を組み合わせて、おみくじを作ってみましょう。</p>
+                              <div class="mission-box font-bold">【MISSION】<br>print("吉") と表示させてみよう！</div>`,
+                    goal: "吉"
+                },
+                {
+                    title: "14. 総合演習②",
+                    content: `<p class="mb-4">最後は自由にコードを書いてみましょう。エラーが出ずに動けばクリアです！</p>
+                              <div class="mission-box font-bold">【MISSION】<br>好きな文字を表示させてみよう。</div>`,
+                    mission: true, goal_type: "any"
+                },
+                {
+                    title: "コース修了！",
+                    content: `<h2 class="text-2xl font-bold text-blue-600 mb-4">おめでとうございます！</h2>
+                              <p>Pythonの基礎ステップをすべてクリアしました。</p>
+                              <p class="mt-4 italic">「どなたでも安心してデジタルの恩恵を受けられるように」</p>
+                              <p>次の「Pythonゲームコース」も、N.S企画で近日公開予定です！</p>`,
+                    mission: false
+                }
+            ],
+
+            async init() {
+                if (!this.state.nickname) {
+                    const name = prompt("こんにちは！ニックネームを入力してください。");
+                    this.state.nickname = name || "ゲスト";
+                    localStorage.setItem('mana-bu-user', this.state.nickname);
+                }
+                document.getElementById('header-user').innerText = this.state.nickname;
+                document.getElementById('welcome-msg').innerText = `こんにちは！${this.state.nickname}様！`;
+                document.getElementById('header-date').innerText = new Date().toLocaleDateString();
+
+                try {
+                    this.state.pyodide = await loadPyodide();
+                    console.log("Python Ready");
+                } catch (e) {
+                    alert("Pythonの起動に失敗しました。ネット接続を確認してください。");
+                }
+            },
+
+            showHome() {
+                this.switchView('view-home');
+                document.getElementById('header-status').innerText = "アクセスビリティ ホーム";
+            },
+
+            showCourseSelect() {
+                this.switchView('view-course-select');
+                document.getElementById('header-status').innerText = "アクセスビリティ コース選択";
+            },
+
+            startCourse(courseId) {
+                this.state.currentIndex = 0;
+                this.switchView('view-learning');
+                document.getElementById('header-status').innerText = "アクセスビリティ 学習中";
+                this.renderSlide();
+            },
+
+            switchView(viewId) {
+                ['view-home', 'view-course-select', 'view-learning'].forEach(id => {
+                    document.getElementById(id).classList.add('hidden');
+                });
+                document.getElementById(viewId).classList.remove('hidden');
+            },
+
+            renderSlide() {
+                const slide = this.slides[this.state.currentIndex];
+                document.getElementById('slide-content').innerHTML = `
+                    <h2 class="text-3xl font-bold mb-6 text-slate-800">${slide.title}</h2>
+                    <div class="text-lg text-slate-600 leading-relaxed">${slide.content}</div>
+                `;
+                document.getElementById('current-page').innerText = this.state.currentIndex + 1;
+                document.getElementById('total-pages').innerText = this.slides.length;
+                document.getElementById('btn-prev').style.visibility = this.state.currentIndex === 0 ? 'hidden' : 'visible';
+
+                if (slide.mission === false) {
+                    this.unlockNext();
+                } else {
+                    this.lockNext();
+                }
+            },
+
+            lockNext() {
+                this.state.missionCleared = false;
+                const btn = document.getElementById('btn-next');
+                btn.disabled = true;
+                btn.classList.add('btn-locked');
+                document.getElementById('mission-status').innerText = "● MISSION 未クリア";
+                document.getElementById('mission-status').className = "text-red-400 font-bold";
+            },
+
+            unlockNext() {
+                this.state.missionCleared = true;
+                const btn = document.getElementById('btn-next');
+                btn.disabled = false;
+                btn.classList.remove('btn-locked');
+                document.getElementById('mission-status').innerText = "● MISSION クリア！";
+                document.getElementById('mission-status').className = "text-green-400 font-bold";
+            },
+
+            nextSlide() {
+                if (this.state.currentIndex < this.slides.length - 1) {
+                    this.state.currentIndex++;
+                    this.renderSlide();
+                    document.getElementById('output-console').innerText = "";
+                    document.getElementById('feedback-area').innerText = "";
+                } else {
+                    this.showHome();
+                }
+            },
+
+            prevSlide() {
+                if (this.state.currentIndex > 0) {
+                    this.state.currentIndex--;
+                    this.renderSlide();
+                }
+            },
+
+            async runCode() {
+                const code = document.getElementById('code-editor').value;
+                const consoleEl = document.getElementById('output-console');
+                const feedbackEl = document.getElementById('feedback-area');
+                const slide = this.slides[this.state.currentIndex];
+
+                if (!this.state.pyodide) return alert("Python準備中です...");
+
+                consoleEl.innerText = "実行中...";
+                try {
+                    await this.state.pyodide.runPython(`
+                        import sys, io
+                        sys.stdout = io.StringIO()
+                    `);
+                    await this.state.pyodide.runPython(code);
+                    const result = this.state.pyodide.runPython("sys.stdout.getvalue()").trim();
+                    consoleEl.innerText = result || "(表示なし)";
+
+                    // ミッション判定
+                    if (slide.mission !== false) {
+                        if (slide.goal_type === "any" || result === slide.goal) {
+                            feedbackEl.innerHTML = "<b class='text-green-600'>OK！正解です。</b><br>次のスライドがアンロックされました。";
+                            this.unlockNext();
+                            const msg = document.createElement('div');
+                msg.className = "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-400 text-white px-10 py-5 rounded-2xl shadow-2xl font-bold text-2xl z-50 animate-bounce";
+                msg.innerHTML = "🎯 MISSION CLEAR!!";
+                document.body.appendChild(msg);
+                setTimeout(() => msg.remove(), 2000);
+
+                        } else {
+                            feedbackEl.innerHTML = `<b class='text-orange-500'>おしい！</b><br>結果が「${slide.goal}」になるように書き直してみよう。`;
+                        }
+                    }
+                } catch (err) {
+                    consoleEl.innerText = "エラーが発生しました";
+                    let msg = err.message;
+                    if (msg.includes("IndentationError")) {
+                        feedbackEl.innerHTML = "<b class='text-red-500'>インデントエラー</b><br>ifやforの次の行には「半角スペース4つ」が必要です。";
+                    } else {
+                        feedbackEl.innerHTML = "<b class='text-red-500'>スペルミスかも？</b><br>全角スペースが混じっていないか、命令が正しいか確認してください。";
+                    }
+                }
+            }
+        };
+
+        window.onload = () => app.init();
+    </script>
+</body>
+</html>
